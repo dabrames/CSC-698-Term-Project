@@ -17,6 +17,35 @@ extern void square_dgemm (int, double*, double*, double*);
 extern void square_dgemm_naive (int, double*, double*, double*);
 #define MAX_SPEED 42.9  // defining Bridges Max Gflops/s per core with peak TurboBoost Frequency
 
+// outputs a given matrix (1-D array) to"results.csv"
+// results = the 1-D matrix
+// n = the size of one side of the matrix
+// NOTE: only for nxn matrices
+void print_to_csv(double* results, int n) {
+    FILE* fp;
+    char* filename = "results.csv";
+    
+    fp = fopen(filename, "w+");
+
+    printf("Printing results file of following matrix:\n");
+
+    // for each row
+    for (int i=0; i < n; ++i) {
+
+        // print remaining columns
+        for (int j=0; j < n; ++j) {
+            printf("%f, ", results[i + j * n]);
+            fprintf(fp, "%f, ", results[i + j * n]);
+        }
+
+        // print newline between rows
+        printf("\n");
+        fprintf(fp, "\n");
+    }
+        fclose(fp);
+
+        printf("Results file written\n");
+}
 
 double wall_time ()
 {
