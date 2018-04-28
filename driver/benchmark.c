@@ -21,13 +21,11 @@ extern void square_dgemm_naive (int, double*, double*, double*);
 // results = the 1-D matrix
 // n = the size of one side of the matrix
 // NOTE: only for nxn matrices
-void print_to_csv(double* results, int n) {
+void matrix_csv(double* results, int n, char* filename) {
     FILE* fp;
-    char* filename = "results.csv";
-    
     fp = fopen(filename, "w+");
 
-    printf("Printing results file of following matrix:\n");
+    printf("Printing C matrix to csv file\n");
 
     // for each row
     for (int i=0; i < n; ++i) {
@@ -79,49 +77,72 @@ void absolute_value (double *p, int n)
 }
 
 int main() {
+
+    //Benchmarking sample sizes
+    //Make sure to have the sizes in increasing order
     int test_sizes[] = { 31, 32, 96, 97, 127, 128, 129, 191, 192, 229, 255, 256, 257,
         319, 320, 321, 417, 479, 480, 511, 512, 639, 640, 767, 768, 769 };
-    
-    int nsizes = sizeof(test_sizes)/sizeof(test_sizes[0]);
 
-    /* assume last size is also the largest size */
-    int nmax = test_sizes[nsizes-1];
+    //File pointers for writing out the results to file
+    FILE* fp;
+    char* outputFile = "output.txt";
+    char* benchmark_C = "benchmark_C.csv";
+    char* naiveFile = "naiveC.txt";
+    char* simd = "simdC.txt";
     
+    int nSizes = sizeof(test_sizes)/sizeof(test_sizes[0]);
+
+    //Hoping that last size is also the largest size
+    int nMax = test_sizes[nSizes-1];
+
+    //Allocating buffer for input and output matrices
     double* buf = NULL;
-    buf = (double*) malloc (3 * nmax * nmax * sizeof(double));
+    buf = (double*) malloc (3 * nMax * nMax * sizeof(double));
     if (buf == NULL) die ("failed to allocate largest problem size");
     
-    
-    /* For each test size */
-    double start_time, time, naive_time, delta;
+    // Using iterations for averaging out the result
     int iterations = 10;
-    for (int isize = 0; isize < nsizes; ++isize)
+
+    //For each test size
+    double start_time, time, delta;
+    for (int iSize = 0; iSize < nSizes; ++iSize)
     {
-        int n = test_sizes[isize];
+        int n = test_sizes[iSize];
         double* A = buf + 0;
-        double* B = A + nmax*nmax;
-        double* C = B + nmax*nmax;
+        double* B = A + nMax*nMax;
+        double* C = B + nMax*nMax;
         
         fill (A, n*n);
         fill (B, n*n);
         fill (C, n*n);
+
+        //First running the brute force
+        time = 0;
         for(int i = 0; i < iterations; i++){
             start_time = wall_time();
             square_dgemm_naive(n, A, B, C);
-            naive_time = wall_time() - start_time;
+            time += wall_time() - start_time;
         }
-        naive_time = naive_time / iterations;
-       
-        
+        time = time / iterations;
+        printf ("Naive: Size:%i, Time:%f\n", n,time);
+
+        fp = fopen(outputFile, "w+");
+        fprintf(fp, "Naive: Size:%i, Time:%f\n", n,time);
+        fclose(fp);
+
+        //Print matrix C to results.csv for comparison
+        matrix_csv(C, n, benchmark_C);
+
+       //Running simd
+        time = 0;
         for(int i = 0; i < iterations; i++){
             start_time = wall_time();
             square_dgemm (n, A, B, C);
-            time = wall_time() - start_time;
+            time += wall_time() - start_time;
         }
         time = time / iterations;
         
-        delta = ((time - naive_time) / naive_time) * -100;
-        printf ("Blocked: %f, Naive: %f, Delta: %f  Size: %i  \n", time, naive_time , delta, n);
+//        printf ("Blocked: %f, Naive: %f, Delta: %f  Size: %i  \n", time, naive_time , delta, n);
     }
     
     free (buf);
