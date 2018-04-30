@@ -29,7 +29,7 @@ char* simd = "simdC.txt";
 void matrix_csv(double* results, int n, char* filename) {
     FILE* fp;
     fp = fopen(filename, "w+");
-    
+
 
     // for each row
     for (int i=0; i < n; ++i) {
@@ -114,17 +114,18 @@ unsigned compare_output_csv(char* fileName1, char* fileName2){
     return ret;
 }
 
-void process_after_each_run(double *C, int n, double time, char *outputFileName_C, char *benchmark_C){
+void process_after_each_run(double *C, int n, double time, char *outputFileName_C,
+                            char *benchmark_C, char* algorithmDesc){
     matrix_csv(C, n, outputFileName_C);
     unsigned isCorrect = compare_output_csv(benchmark_C, outputFileName_C);
     if(!isCorrect){
-        printf ("SIMD output is incorrect");
+        printf ("%s output is incorrect\n", algorithmDesc);
     }
     else {
         FILE *fp;
-        printf("SIMD: Size:%i, Time:%f\n", n, time);
+        printf("%s: Size:%i, Time:%f\n", algorithmDesc, n, time);
         fp = fopen(outputFile, "w+");
-        fprintf(fp, "SIMD: Size:%i, Time:%f\n", n, time);
+        fprintf(fp, "%s: Size:%i, Time:%f\n", algorithmDesc, n, time);
         fclose(fp);
     }
 }
@@ -133,8 +134,9 @@ int main() {
 
     //Benchmarking sample sizes
     //Make sure to have the sizes in increasing order
-    int test_sizes[] = { 31, 32, 96, 97, 127, 128, 129, 191, 192, 229, 255, 256, 257,
-        319, 320, 321, 417, 479, 480, 511, 512, 639, 640, 767, 768, 769 };
+    int test_sizes[] = { 31, 32};
+    //, 96, 97, 127, 128, 129, 191, 192, 229, 255, 256, 257,
+     //   319, 320, 321, 417, 479, 480, 511, 512, 639, 640, 767, 768, 769 };
 
     //File pointers for writing out the results to file
     FILE* fp;
@@ -165,8 +167,8 @@ int main() {
         fill (B, n*n);
         fill (C, n*n);
 
-        printf("Starting the program");
-        printf("Starting with Brute force");
+        printf("Starting the program\n");
+        printf("Starting with Brute force\n");
         //First running the brute force
         time = 0;
         for(int i = 0; i < iterations; i++){
@@ -195,7 +197,7 @@ int main() {
 
         process_after_each_run(C, n, time, simd, benchmark_C);
 
-        printf("The program has end.,,,!! ");
+        printf("The program has end.,,,!!\n");
         
     }
     free (buf);
