@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/driver/benchmark.c
+stdlib.h
+-
+stdio.h
+-
+string.h
+-
+float.h
+-
+math.h
+-
+sys/time.h
+-
+time.h
+-
+

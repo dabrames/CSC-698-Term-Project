@@ -1,0 +1,9 @@
+/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/CMakeFiles/rebuild_cache.dir
+/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/CMakeFiles/edit_cache.dir
+/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/CMakeFiles/matmul-naive.dir
+/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/CMakeFiles/matmul-simd.dir
+/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver/CMakeFiles/rebuild_cache.dir
+/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver/CMakeFiles/edit_cache.dir
+/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver/CMakeFiles/benchmark.dir

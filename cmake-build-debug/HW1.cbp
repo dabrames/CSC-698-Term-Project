@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="HW1"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="clang"/>
+		<Option virtualFolders="CMake Files\;CMake Files\matmul\;CMake Files\driver\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="matmul-naive">
+				<Option output="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/libmatmul-naive.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/matmul"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 matmul-naive"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="matmul-naive/fast">
+				<Option output="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/libmatmul-naive.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/matmul"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 matmul-naive/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="matmul-simd">
+				<Option output="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/libmatmul-simd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/matmul"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 matmul-simd"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="matmul-simd/fast">
+				<Option output="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/libmatmul-simd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/matmul"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 matmul-simd/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/matmul/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="benchmark">
+				<Option output="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver/benchmark" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/matmul"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver/Makefile&quot;  VERBOSE=1 benchmark"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="benchmark/fast">
+				<Option output="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver/benchmark" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/matmul"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver/Makefile&quot;  VERBOSE=1 benchmark/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/cmake-build-debug/driver/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/driver/benchmark.c">
+			<Option target="benchmark"/>
+		</Unit>
+		<Unit filename="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/matmul/dgemm-naive.c">
+			<Option target="matmul-naive"/>
+		</Unit>
+		<Unit filename="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/matmul/dgemm-simd.c">
+			<Option target="matmul-simd"/>
+		</Unit>
+		<Unit filename="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/matmul/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\matmul\"/>
+		</Unit>
+		<Unit filename="/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/driver/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\driver\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -17,6 +17,11 @@ extern void square_dgemm (int, double*, double*, double*);
 extern void square_dgemm_naive (int, double*, double*, double*);
 #define MAX_SPEED 42.9  // defining Bridges Max Gflops/s per core with peak TurboBoost Frequency
 
+char* outputFile = "output.txt";
+char* benchmark_C = "benchmark_C.csv";
+char* naiveFile = "naiveC.txt";
+char* simd = "simdC.txt";
+
 // outputs a given matrix (1-D array) to"results.csv"
 // results = the 1-D matrix
 // n = the size of one side of the matrix
@@ -24,8 +29,7 @@ extern void square_dgemm_naive (int, double*, double*, double*);
 void matrix_csv(double* results, int n, char* filename) {
     FILE* fp;
     fp = fopen(filename, "w+");
-
-    printf("Printing C matrix to csv file\n");
+    
 
     // for each row
     for (int i=0; i < n; ++i) {
@@ -76,6 +80,55 @@ void absolute_value (double *p, int n)
         p[i] = fabs (p[i]);
 }
 
+char * get_buffer_csv(char* fileName){
+    FILE *fp;
+    long lSize;
+    char *buffer;
+
+    fp = fopen ( fileName, "rb" );
+    if( !fp ) die(fileName);
+
+    fseek( fp , 0L , SEEK_END);
+    lSize = ftell( fp );
+    rewind( fp );
+
+    /* allocate memory for entire content */
+    buffer = calloc( 1, lSize+1 );
+    if( !buffer ) fclose(fp),fputs("memory alloc fails",stderr),exit(1);
+
+    /* copy the file into the buffer */
+    if( 1!=fread( buffer , lSize, 1 , fp) )
+        fclose(fp),free(buffer),fputs("entire read fails",stderr),exit(1);
+
+    fclose(fp);
+    return buffer;
+}
+
+unsigned compare_output_csv(char* fileName1, char* fileName2){
+    char * output1 = get_buffer_csv(fileName1);
+    char * output2 = get_buffer_csv(fileName2);
+    unsigned ret = strcmp(output1, output2) == 0 ? 1:0;
+    free(output1);
+    free(output2);
+
+    return ret;
+}
+
+void process_after_each_run(double *C, int n, double time, char *outputFileName_C, char *benchmark_C){
+    matrix_csv(C, n, outputFileName_C);
+    unsigned isCorrect = compare_output_csv(benchmark_C, outputFileName_C);
+    if(!isCorrect){
+        printf ("SIMD output is incorrect");
+    }
+    else {
+        FILE *fp;
+        printf("SIMD: Size:%i, Time:%f\n", n, time);
+        fp = fopen(outputFile, "w+");
+        fprintf(fp, "SIMD: Size:%i, Time:%f\n", n, time);
+        fclose(fp);
+    }
+}
+
 int main() {
 
     //Benchmarking sample sizes
@@ -85,10 +138,6 @@ int main() {
 
     //File pointers for writing out the results to file
     FILE* fp;
-    char* outputFile = "output.txt";
-    char* benchmark_C = "benchmark_C.csv";
-    char* naiveFile = "naiveC.txt";
-    char* simd = "simdC.txt";
     
     int nSizes = sizeof(test_sizes)/sizeof(test_sizes[0]);
 
@@ -116,6 +165,8 @@ int main() {
         fill (B, n*n);
         fill (C, n*n);
 
+        printf("Starting the program");
+        printf("Starting with Brute force");
         //First running the brute force
         time = 0;
         for(int i = 0; i < iterations; i++){
@@ -141,10 +192,13 @@ int main() {
             time += wall_time() - start_time;
         }
         time = time / iterations;
+
+        process_after_each_run(C, n, time, simd, benchmark_C);
+
+        printf("The program has end.,,,!! ");
         
-//        printf ("Blocked: %f, Naive: %f, Delta: %f  Size: %i  \n", time, naive_time , delta, n);
     }
-    
     free (buf);
+    if(fp != NULL) free(fp);
     return 0;
 }

@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/matmul/dgemm-simd.c
+immintrin.h
+/Users/ajinkyachalke/Desktop/csc698/term-project/CSC-698-Term-Project/matmul/immintrin.h
+stdio.h
+-
+
