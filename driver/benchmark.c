@@ -19,8 +19,8 @@ extern void square_dgemm_naive (int, double*, double*, double*);
 
 char* outputFile = "output.txt";
 char* benchmark_C = "benchmark_C.csv";
-char* naiveFile = "naiveC.txt";
-char* simd = "simdC.txt";
+char* naiveFile = "naiveC.csv";
+char* simd = "simdC.csv";
 
 // outputs a given matrix (1-D array) to"results.csv"
 // results = the 1-D matrix
@@ -117,24 +117,31 @@ unsigned compare_output_csv(char* fileName1, char* fileName2){
 void process_after_each_run(double *C, int n, double time, char *outputFileName_C,
                             char *benchmark_C, char* algorithmDesc){
     matrix_csv(C, n, outputFileName_C);
-    unsigned isCorrect = compare_output_csv(benchmark_C, outputFileName_C);
-    if(!isCorrect){
-        printf ("%s output is incorrect\n", algorithmDesc);
-    }
-    else {
-        FILE *fp;
-        printf("%s: Size:%i, Time:%f\n", algorithmDesc, n, time);
-        fp = fopen(outputFile, "w+");
-        fprintf(fp, "%s: Size:%i, Time:%f\n", algorithmDesc, n, time);
-        fclose(fp);
-    }
+//    unsigned isCorrect = compare_output_csv(benchmark_C, outputFileName_C);
+//    if(!isCorrect){
+//        printf ("%s output is incorrect\n", algorithmDesc);
+//    }
+//    else {
+//        FILE *fp;
+//        printf("%s: Size:%i, Time:%f\n", algorithmDesc, n, time);
+//        fp = fopen(outputFile, "w+");
+//        fprintf(fp, "%s: Size:%i, Time:%f\n", algorithmDesc, n, time);
+//        fclose(fp);
+//    }
+
+    FILE *fp;
+    printf("%s: Size:%i, Time:%f\n", algorithmDesc, n, time);
+    fp = fopen(outputFile, "a");
+    fprintf(fp, "%s: Size:%i, Time:%f\n", algorithmDesc, n, time);
+    fclose(fp);
 }
 
 int main() {
 
     //Benchmarking sample sizes
     //Make sure to have the sizes in increasing order
-    int test_sizes[] = { 31, 32};
+    int test_sizes[] = {10};
+//            31, 32};
     //, 96, 97, 127, 128, 129, 191, 192, 229, 255, 256, 257,
      //   319, 320, 321, 417, 479, 480, 511, 512, 639, 640, 767, 768, 769 };
 
@@ -179,7 +186,7 @@ int main() {
         time = time / iterations;
         printf ("Naive: Size:%i, Time:%f\n", n,time);
 
-        fp = fopen(outputFile, "w+");
+        fp = fopen(outputFile, "a");
         fprintf(fp, "Naive: Size:%i, Time:%f\n", n,time);
         fclose(fp);
 
@@ -195,12 +202,11 @@ int main() {
         }
         time = time / iterations;
 
-        process_after_each_run(C, n, time, simd, benchmark_C);
+        process_after_each_run(C, n, time, simd, benchmark_C, "SIMD");
 
         printf("The program has end.,,,!!\n");
         
     }
     free (buf);
-    if(fp != NULL) free(fp);
     return 0;
 }
