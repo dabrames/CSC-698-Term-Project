@@ -14,9 +14,9 @@
 #endif
 
 /* Your function must have the following signature: */
-extern const char* dgemm_desc;
-extern void square_dgemm (int, double*, double*, double*, int);
+extern void square_dgemm_blocked (int, double*, double*, double*, int);
 extern void square_dgemm_naive (int, double*, double*, double*);
+extern void square_dgemm_blocked_naive (int, double*, double*, double*, int);
 extern void square_dgemm_naive_pthreads(int , double* , double* , double* , int);
 
 
@@ -93,8 +93,8 @@ int main() {
     }
     printf("Done with Naive version");
 
-    //Benchmarking Blocked version with different block sizes
-    int block_sizes[] = {4,8,16,32,64};
+    //Benchmarking Blocked Naive version with different block sizes
+    int block_sizes[] = {4,8,16,32,64,128};
     int nBlocks = sizeof(block_sizes)/ sizeof(block_sizes[0]);
     for(int iBlock = 0; iBlock < nBlocks; iBlock++){
         for (int iSize = 0; iSize < nSizes; ++iSize)
@@ -111,7 +111,36 @@ int main() {
             time = 0;
             for(int i = 0; i < iterations; i++){
                 start_time = wall_time();
-                square_dgemm(n, A, B, C, block_sizes[iBlock]);
+                square_dgemm_blocked_naive(n, A, B, C, block_sizes[iBlock]);
+                time += wall_time() - start_time;
+            }
+            time = time / iterations;
+            FILE *fp;
+            printf("%i %f %i\n", n, time, block_sizes[iBlock]);
+            fp = fopen("size-time-block-blocked-naive.txt", "a");
+            fprintf(fp, "%i %f %i\n", n, time, block_sizes[iBlock]);
+            fclose(fp);
+        }
+    }
+    printf("Done with Blocked Naive version");
+
+    //Benchmarking Blocked version with different block sizes
+    for(int iBlock = 0; iBlock < nBlocks; iBlock++){
+        for (int iSize = 0; iSize < nSizes; ++iSize)
+        {
+            int n = test_sizes[iSize];
+            double* A = buf + 0;
+            double* B = A + nMax*nMax;
+            double* C = B + nMax*nMax;
+
+            fill (A, n*n);
+            fill (B, n*n);
+            fill (C, n*n);
+
+            time = 0;
+            for(int i = 0; i < iterations; i++){
+                start_time = wall_time();
+                square_dgemm_blocked(n, A, B, C, block_sizes[iBlock]);
                 time += wall_time() - start_time;
             }
             time = time / iterations;
@@ -126,7 +155,7 @@ int main() {
 
 
     //Benchmarking Pthread version with different pthread numbers
-    int pthread_sizes[] = {4,8,16,32,64};
+    int pthread_sizes[] = {2,4,6,8,16,32,64};
     int npthreads = sizeof(pthread_sizes)/ sizeof(pthread_sizes[0]);
     for(int ipthread = 0; ipthread < npthreads; ipthread++){
         for (int iSize = 0; iSize < nSizes; ++iSize)
