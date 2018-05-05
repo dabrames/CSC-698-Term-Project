@@ -140,7 +140,6 @@ void process_after_each_run(double *C, int n, double time, char *outputFileName_
 }
 
 int main() {
-
     //Benchmarking sample sizes
     //Make sure to have the sizes in increasing order
     int test_sizes[] = {10};
