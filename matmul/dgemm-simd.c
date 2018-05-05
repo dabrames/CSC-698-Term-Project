@@ -1,8 +1,6 @@
 /* 
     Please include compiler name below (you may also include any other modules you would like to be loaded)
-
 COMPILER= Intel icc
-
     Please include All compiler flags and libraries as you want them run. You can simply copy this over from the Makefile's first few lines
  
 CC = icc
@@ -10,7 +8,6 @@ OPT = -O3
 CFLAGS = -Wall -std=gnu99 $(OPT)
 MKLROOT = /opt/intel/composer_xe_2013.1.117/mkl
 LDLIBS = -lrt -Wl,--start-group $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKLROOT)/lib/intel64/libmkl_sequential.a $(MKLROOT)/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm
-
 */
 
 const char* dgemm_desc = "Simple blocked dgemm.";
@@ -120,3 +117,4 @@ void square_dgemm (int lda, double* A, double* B, double* C)
         }
       }
 }
+
