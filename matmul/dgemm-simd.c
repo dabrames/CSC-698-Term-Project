@@ -13,7 +13,7 @@ LDLIBS = -lrt -Wl,--start-group $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKL
 const char* dgemm_desc = "Simple blocked dgemm.";
 
 #if !defined(BLOCK_SIZE)
-#define BLOCK_SIZE 64
+#define BLOCK_SIZE 41
 #endif
 
 #define min(a,b) (((a)<(b))?(a):(b))
@@ -24,27 +24,51 @@ const char* dgemm_desc = "Simple blocked dgemm.";
 static void do_block (int lda, int M, int N, int K, double* A, double* B, double* C)
 {
   /* For each row i of A */
-  for (int j = 0; j < M; ++j)
+  for (int i = 0; i < M; ++i)
     /* For each column j of B */ 
-    for (int i = 0; i < N; ++i) 
+    for (int j = 0; j < N; ++j) 
     {
       /* Compute C(i,j) */
       double cij = C[i+j*lda];
-      for (int k = 0; k < K; k += 2) {
+      for (int k = 0; k < K; ++k)
 	     cij += A[i+k*lda] * B[k+j*lda];
-       cij += A[i+(k+1)*lda] * B[(k+1)+j*lda];
+      C[i+j*lda] = cij;
+    }
+}
 
-      }
+// static void do_square_block (int lda, int M, int N, int K, double* A, double* B, double* C)
+// {
+//   __m128d vec1;
+//   __m128d vec2;
+//   __m128d vec3;
+    
+//   // Unroll loop and add 2 items at a time
+//   for(int i = 0; i < 8; i+= 2)
+//   {
+//     vec1 = _mm_load_pd(&A[i]);
+//     vec2 = _mm_load_pd(&B[i]);
+//     vec3 = _mm_mul_pd(vec1, vec2);
+//     _mm_storeu_pd (&CC[i], vec3);
+//   }
+// }
+
+static void do_block_cache (int lda, int M, int N, int K, double* A, double* B, double* C)
+{
+  /* For each row i of A */
+  for (int i = 0; i < M; ++i)
+    /* For each column j of B */ 
+    for (int j = 0; j < N; ++j) 
+    {
+      /* Compute C(i,j) */
+      double cij = C[i+j*lda];
+      for (int k = 0; k < K; ++k)
+  cij += A[i+k*lda] * B[k+j*lda]; // store i, j, lda locally. Cache sub-block A
       C[i+j*lda] = cij;
     }
 }
 
 void do_block_fast (int lda, int M, int N, int K, double* A, double* B, double* C)
 {
-  double a1, a2, a3, a4,
-         b1, b2, b3, b4,
-         c1, c2, c3, c4 = 0;
-
   static double a[BLOCK_SIZE*BLOCK_SIZE] __attribute__ ((aligned (16)));
   // make a local aligned copy of A's block
   for( int i = 0; i < M; i++ )
@@ -58,26 +82,9 @@ void do_block_fast (int lda, int M, int N, int K, double* A, double* B, double* 
       /* Compute C(i,j) */
       double cij = C[i+j*lda];
       
-      for (int k = 0; k < K; k += 4) {
-        a1 = a[i+k*BLOCK_SIZE];
-        a2 = a[i+(k+1)*BLOCK_SIZE];
-        a3 = a[i+(k+2)*BLOCK_SIZE];
-        a4 = a[i+(k+3)*BLOCK_SIZE];
-        
-        b1 = B[k+j*lda];;
-        b2 = B[(k+1)+j*lda];
-        b3 = B[(k+2)+j*lda];
-        b4 = B[(k+3)+j*lda];
-        
-        c1 = a1 * b1;
-        c2 = a2 * b2;
-        c3 = a3 * b3;
-        c4 = a4 * b4;
- 
-        cij += c1;
-        cij += c2;
-        cij += c3;
-        cij += c4;
+      for (int k = 0; k < K; ++k) {
+        cij += a[i+k*BLOCK_SIZE] * B[k+j*lda];
+        cij += a[i+(k+1)*BLOCK_SIZE] * B[(k+1)+j*lda];
     }
 
     C[i+j*lda] = cij;
@@ -110,3 +117,4 @@ void square_dgemm (int lda, double* A, double* B, double* C)
         }
       }
 }
+
