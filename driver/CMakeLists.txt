@@ -1,3 +1,4 @@
 add_executable (benchmark benchmark.c)
-
-target_link_libraries (benchmark LINK_PUBLIC matmul matmul-naive)
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+target_link_libraries (benchmark LINK_PUBLIC ${CMAKE_THREAD_LIBS_INIT} matmul-simd matmul-naive matmul-naive-pthreads)
