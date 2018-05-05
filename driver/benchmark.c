@@ -5,6 +5,7 @@
 #include <float.h>  // For: DBL_EPSILON
 #include <math.h>   // For: fabs
 #include <pthread.h>
+#include <omp.h>
 
 
 #ifdef GETTIMEOFDAY
@@ -18,6 +19,7 @@ extern const char* dgemm_desc;
 extern void square_dgemm (int, double*, double*, double*);
 extern void square_dgemm_naive (int, double*, double*, double*);
 extern void square_dgemm_naive_pthreads(int , double* , double* , double* , int);
+extern void square_dgemm_naive_openmp(int , double* , double* , double* , int);
 #define MAX_SPEED 42.9  // defining Bridges Max Gflops/s per core with peak TurboBoost Frequency
 
 char* outputFile = "output.txt";
@@ -200,7 +202,7 @@ int main() {
         time = 0;
         for(int i = 0; i < iterations; i++){
             start_time = wall_time();
-            square_dgemm_naive_pthreads(n, A, B, C, 4);
+            square_dgemm_naive_openmp(n, A, B, C, 4);
             time += wall_time() - start_time;
         }
         time = time / iterations;
