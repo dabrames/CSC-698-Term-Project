@@ -1,6 +1,6 @@
 add_library (matmul-blocked dgemm-blocked.c)
 add_library (matmul-blocked-naive dgemm-blocked_naive.c)
-add_library (matmul-simd dgemm-simd.c)
+add_library (matmul-simd dgemm-blocked-unrolled-simd.c)
 add_library (matmul-naive dgemm-naive.c)
 add_library (matmul-naive-pthreads dgemm-naive-pthreads.c)
 SET(GCC_COMPILER "-mavx")
