@@ -89,7 +89,7 @@ void do_block_fast (int lda, int M, int N, int K, double* A, double* B, double* 
  *  C := C + A * B
  * where A, B, and C are lda-by-lda matrices stored in column-major format. 
  * On exit, A and B maintain their input values. */  
-void square_dgemm_blocked(int lda, double* A, double* B, double* C, int block_size)
+void square_dgemm_blocked_unrolled(int lda, double* A, double* B, double* C, int block_size)
 {
   /* For each block-row of A */ 
   for (int i = 0; i < lda; i += block_size)
