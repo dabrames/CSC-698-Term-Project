@@ -5,7 +5,7 @@
 #include <float.h>  // For: DBL_EPSILON
 #include <math.h>   // For: fabs
 #include <pthread.h>
-
+#include <sys/stat.h> // For creating output files directory
 
 #ifdef GETTIMEOFDAY
 #include <sys/time.h> // For struct timeval, gettimeofday
@@ -18,7 +18,7 @@ extern void square_dgemm_blocked (int, double*, double*, double*, int);
 extern void square_dgemm_naive (int, double*, double*, double*);
 extern void square_dgemm_blocked_naive (int, double*, double*, double*, int);
 extern void square_dgemm_naive_pthreads(int , double* , double* , double* , int);
-extern void square_dgemm_blocked_unrolled_simd(int, double* , double* , double*, int);
+
 
 
 double wall_time ()
@@ -66,6 +66,12 @@ int main() {
     int iterations = 10;
     double start_time, time;
 
+    // Create output files
+    struct stat st = {0};
+    if (stat("../output-files/", &st) == -1) {
+    	mkdir("../output-files/", 0700);
+    }
+
     //Benchmarking naive version with different sample sizes
     for (int iSize = 0; iSize < nSizes; ++iSize)
     {
@@ -87,7 +93,7 @@ int main() {
         time = time / iterations;
         FILE *fp;
         printf("%i %f\n", n, time);
-        fp = fopen("size-time-block-naive.txt", "a");
+        fp = fopen("../output-files/size-time-block-naive.txt", "a");
         fprintf(fp, "%i %f\n", n, time);
         fclose(fp);
     }
@@ -117,7 +123,7 @@ int main() {
             time = time / iterations;
             FILE *fp;
             printf("%i %f %i\n", n, time, block_sizes[iBlock]);
-            fp = fopen("size-time-block-blocked-naive.txt", "a");
+            fp = fopen("../output-files/size-time-block-blocked-naive.txt", "a");
             fprintf(fp, "%i %f %i\n", n, time, block_sizes[iBlock]);
             fclose(fp);
         }
@@ -146,7 +152,7 @@ int main() {
             time = time / iterations;
             FILE *fp;
             printf("%i %f %i\n", n, time, block_sizes[iBlock]);
-            fp = fopen("size-time-block-blocked.txt", "a");
+            fp = fopen("../output-files/size-time-block-blocked.txt", "a");
             fprintf(fp, "%i %f %i\n", n, time, block_sizes[iBlock]);
             fclose(fp);
         }
@@ -178,43 +184,13 @@ int main() {
             time = time / iterations;
             FILE *fp;
             printf("%i %f %i\n", n, time, pthread_sizes[ipthread]);
-            fp = fopen("size-time-Pthreads.txt", "a");
+            fp = fopen("../output-files/size-time-Pthreads.txt", "a");
             fprintf(fp, "%i %f %i\n", n, time, pthread_sizes[ipthread]);
             fclose(fp);
         }
     }
     printf("Done with Pthread version");
 
-
-
-    //Benchmarking Unrolled Simd Blocked version with different block sizes
-    for(int iBlock = 0; iBlock < nBlocks; iBlock++){
-        for (int iSize = 0; iSize < nSizes; ++iSize)
-        {
-            int n = test_sizes[iSize];
-            double* A = buf + 0;
-            double* B = A + nMax*nMax;
-            double* C = B + nMax*nMax;
-
-            fill (A, n*n);
-            fill (B, n*n);
-            fill (C, n*n);
-
-            time = 0;
-            for(int i = 0; i < iterations; i++){
-                start_time = wall_time();
-                square_dgemm_blocked_unrolled_simd(n, A, B, C, block_sizes[iBlock]);
-                time += wall_time() - start_time;
-            }
-            time = time / iterations;
-            FILE *fp;
-            printf("%i %f %i\n", n, time, block_sizes[iBlock]);
-            fp = fopen("size-time-block-simd-unrolled.txt", "a");
-            fprintf(fp, "%i %f %i\n", n, time, block_sizes[iBlock]);
-            fclose(fp);
-        }
-    }
-    printf("Done with Unolled Simd Blocked version");
 
 
     free (buf);
