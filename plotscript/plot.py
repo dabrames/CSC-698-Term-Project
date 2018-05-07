@@ -6,8 +6,9 @@ data1=list()
 data2=list()
 data3=list()
 
+DATA_DIRECTORY = "../output-files/"
 
-fh = open("naive.txt","r")
+fh = open(DATA_DIRECTORY + "naive.txt","r")
 x=list()
 y=list()
 for line in fh:
@@ -18,7 +19,7 @@ trace1 = go.Scatter(x=x,y=y,name='naive')
 
 fh.close()
 
-fh = open("blocked-naive.txt","r")
+fh = open(DATA_DIRECTORY + "blocked-naive.txt","r")
 
 x=list()
 y=list()
@@ -40,7 +41,7 @@ data.append(trace1)
 
 fh.close()
 
-fh = open("blocked_unrolled.txt","r")
+fh = open(DATA_DIRECTORY + "blocked_unrolled.txt","r")
 
 x=list()
 y=list()
@@ -62,7 +63,7 @@ data1.append(trace1)
 
 fh.close()
 
-fh = open("blocked_unrolled_simd.txt","r")
+fh = open(DATA_DIRECTORY + "blocked_unrolled_simd.txt","r")
 
 x=list()
 y=list()
@@ -84,7 +85,7 @@ data2.append(trace1)
 
 fh.close()
 
-fh = open("naive_pthreads.txt","r")
+fh = open(DATA_DIRECTORY + "naive_pthreads.txt","r")
 
 x=list()
 y=list()
