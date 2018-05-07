@@ -1,4 +1,4 @@
-#Plotly API Key instructions
+###Plotly API Key instructions
 
 ## Go here first and follow the instructions
 https://plot.ly/python/getting-started/
