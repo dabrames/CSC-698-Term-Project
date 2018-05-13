@@ -13,11 +13,6 @@
  
  */
 
-const char* dgemm_desc = "Simple blocked dgemm.";
-#if !defined(BLOCK_SIZE)
-#define BLOCK_SIZE 41
-#endif
-
 #define min(a,b) (((a)<(b))?(a):(b))
 
 /* This auxiliary subroutine performs a smaller dgemm operation
@@ -42,19 +37,19 @@ static void do_block (int lda, int M, int N, int K, double* A, double* B, double
  *  C := C + A * B
  * where A, B, and C are lda-by-lda matrices stored in column-major format.
  * On exit, A and B maintain their input values. */
-void square_dgemm (int lda, double* A, double* B, double* C)
+void square_dgemm_blocked_naive (int lda, double* A, double* B, double* C, int block_size)
 {
     /* For each block-row of A */
-    for (int i = 0; i < lda; i += BLOCK_SIZE)
+    for (int i = 0; i < lda; i += block_size)
     /* For each block-column of B */
-        for (int j = 0; j < lda; j += BLOCK_SIZE)
+        for (int j = 0; j < lda; j += block_size)
         /* Accumulate block dgemms into block of C */
-            for (int k = 0; k < lda; k += BLOCK_SIZE)
+            for (int k = 0; k < lda; k += block_size)
             {
                 /* Correct block dimensions if block "goes off edge of" the matrix */
-                int M = min (BLOCK_SIZE, lda-i);
-                int N = min (BLOCK_SIZE, lda-j);
-                int K = min (BLOCK_SIZE, lda-k);
+                int M = min (block_size, lda-i);
+                int N = min (block_size, lda-j);
+                int K = min (block_size, lda-k);
                 
                 /* Perform individual block dgemm */
                 do_block(lda, M, N, K, A + i + k*lda, B + k + j*lda, C + i + j*lda);

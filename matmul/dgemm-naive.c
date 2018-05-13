@@ -13,8 +13,6 @@
  
  */
 
-const char* dgemm_desc_naive = "Naive, three-loop dgemm.";
-
 /* This routine performs a dgemm operation
  *  C := C + A * B
  * where A, B, and C are lda-by-lda matrices stored in column-major format.

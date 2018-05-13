@@ -10,8 +10,6 @@ MKLROOT = /opt/intel/composer_xe_2013.1.117/mkl
 LDLIBS = -lrt -Wl,--start-group $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKLROOT)/lib/intel64/libmkl_sequential.a $(MKLROOT)/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm
 */
 
-const char* dgemm_desc = "Simple blocked dgemm.";
-
 #define min(a,b) (((a)<(b))?(a):(b))
 
 /* This auxiliary subroutine performs a smaller dgemm operation
@@ -19,20 +17,27 @@ const char* dgemm_desc = "Simple blocked dgemm.";
  * where C is M-by-N, A is M-by-K, and B is K-by-N. */
 static void do_block (int lda, int M, int N, int K, double* A, double* B, double* C, int block_size)
 {
+  int mul_j_lda;
+  int res_i;
+  int prod_k_lda;
+  //static unsigned int
   /* For each row i of A */
-  for (int j = 0; j < M; ++j)
-    /* For each column j of B */ 
-    for (int i = 0; i < N; ++i) 
+  for (int i = 0; i < M; ++i){
+    /* For each column j of B */
+    for (int j = 0; j < N; ++j)
     {
       /* Compute C(i,j) */
-      double cij = C[i+j*lda];
-      for (int k = 0; k < K; k += 2) {
-	     cij += A[i+k*lda] * B[k+j*lda];
-       cij += A[i+(k+1)*lda] * B[(k+1)+j*lda];
+      mul_j_lda = j * lda;
+      res_i = i + mul_j_lda;
+      double cij = C[res_i];
 
+      for (int k = 0; k < K; ++k){
+        prod_k_lda = k * lda;
+        cij += A[i + prod_k_lda] * B[k + mul_j_lda];
       }
-      C[i+j*lda] = cij;
+      C[i + mul_j_lda] = cij;
     }
+  }
 }
 
 void do_block_fast (int lda, int M, int N, int K, double* A, double* B, double* C, int block_size)
@@ -84,7 +89,7 @@ void do_block_fast (int lda, int M, int N, int K, double* A, double* B, double* 
  *  C := C + A * B
  * where A, B, and C are lda-by-lda matrices stored in column-major format. 
  * On exit, A and B maintain their input values. */  
-void square_dgemm_blocked(int lda, double* A, double* B, double* C, int block_size)
+void square_dgemm_blocked_unrolled(int lda, double* A, double* B, double* C, int block_size)
 {
   /* For each block-row of A */ 
   for (int i = 0; i < lda; i += block_size)
