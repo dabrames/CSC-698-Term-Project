@@ -2,3 +2,5 @@ build/
 cmake-build-debug
 .DS_Store
 .idea/
+output-files
+output-files.zip
