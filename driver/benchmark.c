@@ -20,6 +20,7 @@ extern void square_dgemm_blocked_naive (int, double*, double*, double*, int);
 extern void square_dgemm_naive_pthreads(int, double*, double*, double*, int);
 extern void square_dgemm_blocked_unrolled_simd(int, double*, double*, double*, int);
 
+extern void square_dgemm_blocked_unrolled_pthreads(int, double*, double*, double*, int);
 
 double wall_time ()
 {
@@ -52,6 +53,7 @@ int main() {
     int test_sizes[] = {31, 32, 96, 97, 127, 128, 129, 191, 192, 229, 255, 256, 257, 319, 320, 321, 417, 479, 480,
                         511, 512, 639, 640, 767, 768, 769};
 
+    //int test_sizes[] = {2048, 2049};
     int nSizes = sizeof(test_sizes)/sizeof(test_sizes[0]);
 
     //Hoping that last size is also the largest size
@@ -63,7 +65,7 @@ int main() {
     if (buf == NULL) die ("failed to allocate largest problem size");
     
     // Using iterations for averaging out the result
-    int iterations = 10;
+    int iterations = 3;
     double start_time, time;
 
     // Create output files
@@ -100,7 +102,7 @@ int main() {
     printf("Done with Naive version");
 
     //Benchmarking Blocked Naive version with different block sizes
-    int block_sizes[] = {4,8,16,32,64,128};
+    int block_sizes[] = {16,32,64,128,256,512};
     int nBlocks = sizeof(block_sizes)/ sizeof(block_sizes[0]);
     for(int iBlock = 0; iBlock < nBlocks; iBlock++){
         for (int iSize = 0; iSize < nSizes; ++iSize)
@@ -220,6 +222,36 @@ int main() {
     }
     printf("Done with Pthread version");
 
+    //Benchmarking Blocked Pthreads version with different block sizes
+    
+    int nBlocks = sizeof(block_sizes)/ sizeof(block_sizes[0]);
+    for(int iBlock = 0; iBlock < nBlocks; iBlock++){
+        for (int iSize = 0; iSize < nSizes; ++iSize)
+        {
+            int n = test_sizes[iSize];
+            double* A = buf + 0;
+            double* B = A + nMax*nMax;
+            double* C = B + nMax*nMax;
+
+            fill (A, n*n);
+            fill (B, n*n);
+            fill (C, n*n);
+
+            time = 0;
+            for(int i = 0; i < iterations; i++){
+                start_time = wall_time();
+                square_dgemm_blocked_naive(n, A, B, C, block_sizes[iBlock]);
+                time += wall_time() - start_time;
+            }
+            time = time / iterations;
+            FILE *fp;
+            printf("%i %f %i\n", n, time, block_sizes[iBlock]);
+            fp = fopen("../output-files/blocked-pthreads.txt", "a");
+            fprintf(fp, "%i %f %i\n", n, time, block_sizes[iBlock]);
+            fclose(fp);
+        }
+    }
+    printf("Done with Blocked Pthreads version");
 
 
     free (buf);

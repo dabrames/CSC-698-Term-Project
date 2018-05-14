@@ -42,13 +42,14 @@ void* worker (void* arg){
 	int end = (tid + 1) * (gN / nthreads);
 
 	//printf("Worker thread %d",tid);
+  //printf("gN = %d, gM = %d , gK = %d \n", gN, gM, gK);
 
 	for (int i = start; i < end; i++) 
         for (int j = 0; j < gN; j++){ 
         	double cij = matC[i+j*gN];
             for (int k = 0; k < gK; k++) 
-                cij += matA[i + k*gN] * matB[k + j*gN];
-            matC[i+j*gN] = cij;
+                cij += gA[i + k*gN] * gB[k + j*gN];
+            gC[i+j*gN] = cij;
         }
 
 }
@@ -92,7 +93,7 @@ void do_block_fast_pth ()
 		int *tid;
 		tid = (int *) malloc(sizeof(int));
 		*tid = i;
-		//printf("Phread with id = %d", *tid);
+		//printf("Phread with id = %d \n", *tid);
 		pthread_create(&worker_threads[i], NULL, worker, (void *) tid);
 	}
 
@@ -130,12 +131,14 @@ void square_dgemm_blocked_unrolled_pthreads(int lda, double* A, double* B, doubl
 
 	      if ((M % block_size ==0) && (N % block_size ==0) && (K % block_size == 0)) {
           /* Perform square block dgemm */
-          gM = M; gN = N; gK = k; gA = A + i + k*lda; gB = B + k + j*lda; gC = C + i + j*lda;
+          gM = M; gN = N; gK = K; gA = A + i + k*lda; gB = B + k + j*lda; gC = C + i + j*lda;
           
+          printf("calling do_block_fast for i = %d, j = %d, k = %d \n", i, j, k);
           do_block_fast_pth();			//lda, M, N, K, A + i + k*lda, B + k + j*lda, C + i + j*lda, block_size);
         
         } else {
           /* Perform individual block dgemm */
+         printf("calling do_block for i = %d, j = %d, k = %d \n", i, j, k);
 	       do_block(lda, M, N, K, A + i + k*lda, B + k + j*lda, C + i + j*lda, block_size);
         }
       }
