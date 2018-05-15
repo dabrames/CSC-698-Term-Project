@@ -65,7 +65,7 @@ int main() {
     if (buf == NULL) die ("failed to allocate largest problem size");
     
     // Using iterations for averaging out the result
-    int iterations = 3;
+    int iterations = 1;
     double start_time, time;
 
     // Create output files
@@ -103,6 +103,8 @@ int main() {
 
     //Benchmarking Blocked Naive version with different block sizes
     int block_sizes[] = {16,32,64,128,256,512};
+
+    /***************************
     int nBlocks = sizeof(block_sizes)/ sizeof(block_sizes[0]);
     for(int iBlock = 0; iBlock < nBlocks; iBlock++){
         for (int iSize = 0; iSize < nSizes; ++iSize)
@@ -221,7 +223,7 @@ int main() {
         }
     }
     printf("Done with Pthread version");
-
+    ************************************/
     //Benchmarking Blocked Pthreads version with different block sizes
     
     int nBlocks = sizeof(block_sizes)/ sizeof(block_sizes[0]);
