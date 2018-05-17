@@ -57,6 +57,14 @@ int main() {
     //Hoping that last size is also the largest size
     int nMax = test_sizes[nSizes-1];
 
+    //Block sizes for algorithm using blocks
+    int block_sizes[] = {16,32,64,128,256,512};
+    int nBlocks = sizeof(block_sizes)/ sizeof(block_sizes[0]);
+
+    //Thread sizes for algorithms using threas
+    int pthread_sizes[] = {2,4,6,8,16,32,64};
+    int npthreads = sizeof(pthread_sizes)/ sizeof(pthread_sizes[0]);
+
     //Allocating buffer for input and output matrices
     double* buf = NULL;
     buf = (double*) malloc (3 * nMax * nMax * sizeof(double));
@@ -100,8 +108,6 @@ int main() {
     printf("Done with Naive version");
 
     //Benchmarking Blocked Naive version with different block sizes
-    int block_sizes[] = {16,32,64,128,256,512};
-    int nBlocks = sizeof(block_sizes)/ sizeof(block_sizes[0]);
     for(int iBlock = 0; iBlock < nBlocks; iBlock++){
         for (int iSize = 0; iSize < nSizes; ++iSize)
         {
@@ -190,8 +196,6 @@ int main() {
 
 
     //Benchmarking Pthread version with different pthread numbers
-    int pthread_sizes[] = {2,4,6,8,16,32,64};
-    int npthreads = sizeof(pthread_sizes)/ sizeof(pthread_sizes[0]);
     for(int ipthread = 0; ipthread < npthreads; ipthread++){
         for (int iSize = 0; iSize < nSizes; ++iSize)
         {
@@ -221,7 +225,6 @@ int main() {
     printf("Done with Pthread version");
 
     //Benchmarking Blocked Pthreads version with different block sizes    
-    int nBlocks = sizeof(block_sizes)/ sizeof(block_sizes[0]);
     for(int iBlock = 0; iBlock < nBlocks; iBlock++){
         for (int iSize = 0; iSize < nSizes; ++iSize)
         {
