@@ -23,6 +23,19 @@ It will take some time to complete the benchmark since all algorithms runs for 3
 # Verify Output of Benchmarks
 Use cmp -l "file1.csv" "file2.csv" to get a readout of all bytes that differ 
 
+# Instructions for plotting the results using plotly (free API)
+
+* First step is to sign-up for plotly  
+`https://plot.ly/python/getting-started/`
+
+* Setup the API key on your system by following the steps at  
+`https://plot.ly/settings/api`  
+(Click 'regenerate key' without adjust anything fields or settings.)
+
+# Run the script  
+* Make sure the ouptfiles are at  `../output-files/` 
+* Then run `python plot.py`
+
+
 #### Note:   
-* For plotting the results go to `plotscript` folder and follow the instructions there. 
 * The plots will overwrite for every run.
