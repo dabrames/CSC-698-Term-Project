@@ -5,6 +5,7 @@ data=list()
 data1=list()
 data2=list()
 data3=list()
+data4=list()
 
 DATA_DIRECTORY = "../output-files/"
 
@@ -23,7 +24,7 @@ fh = open(DATA_DIRECTORY + "blocked-naive.txt","r")
 
 x=list()
 y=list()
-block_size=4
+block_size=16
 for line in fh:
   words = line.split()
   temp_block = int(words[2])
@@ -45,7 +46,7 @@ fh = open(DATA_DIRECTORY + "blocked_unrolled.txt","r")
 
 x=list()
 y=list()
-block_size=4
+block_size=16
 for line in fh:
   words = line.split()
   temp_block = int(words[2])
@@ -67,7 +68,7 @@ fh = open(DATA_DIRECTORY + "blocked_unrolled_simd.txt","r")
 
 x=list()
 y=list()
-block_size=4
+block_size=16
 for line in fh:
   words = line.split()
   temp_block = int(words[2])
@@ -107,6 +108,28 @@ data3.append(trace1)
 
 fh.close()
 
+fh = open(DATA_DIRECTORY + "blocked-pthreads.txt","r")
+
+x=list()
+y=list()
+block_size=16
+for line in fh:
+  words = line.split()
+  temp_block = int(words[2])
+  if block_size != temp_block:
+    trace = go.Scatter(x=x,y=y,name=str(block_size)+' blocks')
+    data4.append(trace)
+    block_size=int(words[2])
+    x=list()
+    y=list()
+  x.append(float(words[0]))
+  y.append(float(words[1])) 
+trace = go.Scatter(x=x,y=y,name=str(block_size)+' blocks')
+data4.append(trace)
+data4.append(trace1)
+
+fh.close()
+
 layout = go.Layout(
     title='Naive Block VS Naive',
     xaxis=dict(
@@ -115,7 +138,11 @@ layout = go.Layout(
             family='Gothic Bold, monospace',
             size=18,
             color='#7f7f7f'
-        )
+        ),
+        autorange=True,
+        autotick=True,
+        ticks='outside'
+
     ),
     yaxis=dict(
         title='Time',
@@ -123,7 +150,11 @@ layout = go.Layout(
             family='Gothic Bold, monospace',
             size=18,
             color='#7f7f7f'
-        )
+        ),
+        autorange=True,
+        autotick=True,
+        ticks='outside'
+
     )
 )
 
@@ -135,7 +166,11 @@ layout1 = go.Layout(
             family='Gothic Bold, monospace',
             size=18,
             color='#7f7f7f'
-        )
+        ),
+        autorange=True,
+        autotick=True,
+        ticks='outside'
+
     ),
     yaxis=dict(
         title='Time',
@@ -143,7 +178,11 @@ layout1 = go.Layout(
             family='Gothic Bold, monospace',
             size=18,
             color='#7f7f7f'
-        )
+        ),
+        autorange=True,
+        autotick=True,
+        ticks='outside'
+
     )
 )
 
@@ -155,7 +194,11 @@ layout2 = go.Layout(
             family='Gothic Bold, monospace',
             size=18,
             color='#7f7f7f'
-        )
+        ),
+        autorange=True,
+        autotick=True,
+        ticks='outside'
+
     ),
     yaxis=dict(
         title='Time',
@@ -163,7 +206,11 @@ layout2 = go.Layout(
             family='Gothic Bold, monospace',
             size=18,
             color='#7f7f7f'
-        )
+        ),
+        autorange=True,
+        autotick=True,
+        ticks='outside'
+
     )
 )
 
@@ -175,7 +222,11 @@ layout3 = go.Layout(
             family='Gothic Bold, monospace',
             size=18,
             color='#7f7f7f'
-        )
+        ),
+        autorange=True,
+        autotick=True,
+        ticks='outside'
+
     ),
     yaxis=dict(
         title='Time',
@@ -183,7 +234,38 @@ layout3 = go.Layout(
             family='Gothic Bold, monospace',
             size=18,
             color='#7f7f7f'
-        )
+        ),
+        autorange=True,
+        autotick=True,
+        ticks='outside'
+    )
+)
+
+layout4 = go.Layout(
+    title='Blocked PThreads VS Naive',
+    xaxis=dict(
+        title='Sample Size',
+        titlefont=dict(
+            family='Gothic Bold, monospace',
+            size=18,
+            color='#7f7f7f'
+        ),
+        autorange=True,
+        autotick=True,
+        ticks='outside'
+
+    ),
+    yaxis=dict(
+        title='Time',
+        titlefont=dict(
+            family='Gothic Bold, monospace',
+            size=18,
+            color='#7f7f7f'
+        ),
+        autorange=True,
+        autotick=True,
+        ticks='outside'
+
     )
 )
 
@@ -195,3 +277,5 @@ fig2 = go.Figure(data=data2, layout=layout2)
 plot_url = py.plot(fig2, filename='blocked simd VS naive')
 fig3 = go.Figure(data=data3, layout=layout3)
 plot_url = py.plot(fig3, filename='naive pthreads VS naive')
+fig4 = go.Figure(data=data4, layout=layout4)
+plot_url = py.plot(fig4, filename='blocked pthreads VS naive')
