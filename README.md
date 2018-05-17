@@ -21,4 +21,8 @@ You can go do your grocery shopping.
 It will take some time to complete the benchmark since all algorithms runs for 3 iterations for 12 different matrix sizes.
 
 # Verify Output of Benchmarks
-Use cmp -l "file1.csv" "file2.csv" to get a readout of all bytes that differ
+Use cmp -l "file1.csv" "file2.csv" to get a readout of all bytes that differ 
+
+#### Note:   
+* For plotting the results go to `plotscript` folder and follow the instructions there. 
+* The plots will overwrite for every run.
