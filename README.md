@@ -32,7 +32,6 @@ Use cmp -l "file1.csv" "file2.csv" to get a readout of all bytes that differ
 `https://plot.ly/settings/api`  
 (Click 'regenerate key' without adjust anything fields or settings.)
 
-# Run the script  
 * Make sure the ouptfiles are at  `../output-files/` 
 * Then run `python plot.py`
 
