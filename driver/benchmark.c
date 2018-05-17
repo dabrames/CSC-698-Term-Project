@@ -52,8 +52,6 @@ int main() {
     //Make sure to have the sizes in increasing order
     int test_sizes[] = {31, 32, 96, 97, 127, 128, 129, 191, 192, 229, 255, 256, 257, 319, 320, 321, 417, 479, 480,
                         511, 512, 639, 640, 767, 768, 769};
-
-    //int test_sizes[] = {2048, 2049};
     int nSizes = sizeof(test_sizes)/sizeof(test_sizes[0]);
 
     //Hoping that last size is also the largest size
@@ -103,8 +101,6 @@ int main() {
 
     //Benchmarking Blocked Naive version with different block sizes
     int block_sizes[] = {16,32,64,128,256,512};
-
-    /***************************
     int nBlocks = sizeof(block_sizes)/ sizeof(block_sizes[0]);
     for(int iBlock = 0; iBlock < nBlocks; iBlock++){
         for (int iSize = 0; iSize < nSizes; ++iSize)
@@ -223,9 +219,8 @@ int main() {
         }
     }
     printf("Done with Pthread version");
-    ************************************/
-    //Benchmarking Blocked Pthreads version with different block sizes
-    
+
+    //Benchmarking Blocked Pthreads version with different block sizes    
     int nBlocks = sizeof(block_sizes)/ sizeof(block_sizes[0]);
     for(int iBlock = 0; iBlock < nBlocks; iBlock++){
         for (int iSize = 0; iSize < nSizes; ++iSize)
